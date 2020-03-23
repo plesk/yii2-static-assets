@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace SamIT\Yii2\StaticAssets;
 
@@ -30,7 +29,7 @@ class Module extends \yii\base\Module
     public $excludedPatterns = [];
 
 
-    public function init(): void
+    public function init()
     {
         parent::init();
         $assetManagerConfig = $this->getComponents(true)['assetManager']

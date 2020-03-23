@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace SamIT\Yii2\StaticAssets\helpers;
 
@@ -43,7 +42,7 @@ class AssetHelper
     public static function findAssetBundles(string $baseDir, array $excludedPatterns = []): array
     {
         // We register an autoloader to handle missing classes.
-        $autoLoader = function($class): void {
+        $autoLoader = function($class) {
             echo "Autoloading: $class\n";
             $trace = \debug_backtrace(0, 2);
 
@@ -171,7 +170,7 @@ class AssetHelper
 
     }
 
-    public static function parseClass(array &$tokens): ?string
+    public static function parseClass(array &$tokens)
     {
         self::popUntil($tokens, [T_CLASS]);
         $popped = self::popUntil($tokens, ['{', T_EXTENDS, T_IMPLEMENTS]);
@@ -214,7 +213,7 @@ class AssetHelper
 
     }
 
-    public static function publishAssets(AssetManager $assetManager, $baseDir, $excludedPatterns = []): void
+    public static function publishAssets(AssetManager $assetManager, $baseDir, $excludedPatterns = [])
     {
         foreach(self::findAssetBundles($baseDir, $excludedPatterns) as $bundle) {
             $assetManager->getBundle($bundle, true);

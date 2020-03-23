@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 use Docker\API\Model\BuildInfo;
 use Docker\API\Normalizer\NormalizerFactory;
@@ -15,7 +14,7 @@ class ModuleTest extends \Codeception\Test\Unit
      */
     protected $module;
 
-    public function _before(): void
+    public function _before()
     {
         parent::_before();
         $this->module = \Yii::$app->getModule('staticAssets');

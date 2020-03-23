@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 namespace SamIT\Yii2\StaticAssets;
 
@@ -19,7 +18,7 @@ class ReadOnlyAssetManager extends \yii\web\AssetManager
      */
     public $assetDevelopmentMode = false;
 
-    public function init(): void
+    public function init()
     {
         if ($this->assetDevelopmentMode)
         {
