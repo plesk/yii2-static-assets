@@ -22,24 +22,4 @@ class ModuleTest extends \Codeception\Test\Unit
         $this->assertInstanceOf(\SamIT\Yii2\StaticAssets\Module::class, $this->module);
     }
 
-    // tests
-    public function testBuild(): void
-    {
-        $context = $this->module->createBuildContext();
-        $context->setCleanup(false);
-        $directory = $context->getDirectory();
-
-        $dockerFile = $context->getDockerfileContent();
-
-        $fileName = \preg_replace('#.*ADD (.+?) /nginx\.conf.*#s', '$1', $dockerFile);
-        $this->assertFileExists($directory . '/' . $fileName);
-//        passthru("docker build \"$directory\"");
-
-//        $fileName = \preg_replace('#.*ADD (.+?) /entrypoint\.sh.*#s', '$2', $dockerFile);
-//        $this->assertFileExists($directory . '/' . $fileName);
-
-    }
-
-
-
 }
