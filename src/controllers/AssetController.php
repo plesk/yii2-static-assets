@@ -23,13 +23,6 @@ class AssetController extends Controller
 
     public $baseUrl;
 
-    /**
-     * @var string The location of your entry script inside the PHPFPM container.
-     * Must be absolute, does not support aliases.
-     */
-    public $entryScript;
-
-
     /** @var array List of fnmatch patterns with file names to skip. */
     public $excludedPatterns = [];
 
@@ -41,7 +34,6 @@ class AssetController extends Controller
         $this->baseUrl = $this->module->baseUrl;
         $this->excludedPatterns = $this->module->excludedPatterns;
     }
-
 
     public function actionPublish($path): void
     {
