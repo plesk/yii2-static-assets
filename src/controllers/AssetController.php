@@ -48,7 +48,6 @@ class AssetController extends Controller
 
             \passthru("ls -la {$bundle->basePath}");
             FileHelper::copyDirectory($bundle->basePath, "$path/default");
-            AssetHelper::createGzipFiles("$path/default");
 
 
             $this->stdout("OK\n", Console::FG_GREEN);
@@ -63,11 +62,6 @@ class AssetController extends Controller
 
         $this->stdout("Publishing vendor assets... ", Console::FG_CYAN);
         AssetHelper::publishAssets($assetManager, \Yii::getAlias('@vendor'), $this->excludedPatterns);
-        $this->stdout("OK\n", Console::FG_GREEN);
-
-
-        $this->stdout("Compressing assets... ", Console::FG_CYAN);
-        AssetHelper::createGzipFiles($path);
         $this->stdout("OK\n", Console::FG_GREEN);
     }
 
