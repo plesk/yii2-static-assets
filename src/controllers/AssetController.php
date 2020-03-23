@@ -53,7 +53,7 @@ class AssetController extends Controller
 
             $this->stdout("OK\n", Console::FG_GREEN);
         } else {
-            \mkdir("$path/default");
+            @\mkdir("$path/default");
         }
 
         $assetManager = $this->getAssetManager($path);
