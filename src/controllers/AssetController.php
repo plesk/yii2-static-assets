@@ -35,6 +35,14 @@ class AssetController extends Controller
         $this->excludedPatterns = $this->module->excludedPatterns;
     }
 
+    public function options($actionID) {
+        return array_merge(parent::options($actionID), [
+            'defaultBundle',
+            'baseUrl',
+            'excludedPatterns'
+        ]);
+    }
+
     public function actionPublish($path): void
     {
         $this->stdout("Publishing default bundle to webroot...\n", Console::FG_CYAN);
