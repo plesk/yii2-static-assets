@@ -55,7 +55,7 @@ class Module extends \yii\base\Module
                 \realpath(\Yii::getAlias('@app')) => 'app',
                 \realpath(\Yii::getAlias('@vendor')) => 'vendor'
             ]);
-            return \strtr(\trim($relativePath, '/'), ['/' => '_']);
+            return \md5(\strtr(\trim($relativePath, '/'), ['/' => '_']));
         };
     }
 
