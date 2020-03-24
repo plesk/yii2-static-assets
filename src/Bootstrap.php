@@ -2,7 +2,6 @@
 
 namespace SamIT\Yii2\StaticAssets;
 
-
 use yii\base\Application;
 use yii\base\BootstrapInterface;
 
@@ -17,11 +16,13 @@ class Bootstrap implements BootstrapInterface
     {
         if ($app instanceof \yii\console\Application) {
             if (!$app->hasModule("staticAssets")) {
-                $app->setModule("staticAssets", [
-                    'class' => Module::class
-                ]);
+                $app->setModule(
+                    "staticAssets",
+                    [
+                        'class' => Module::class
+                    ]
+                );
             }
         }
-
     }
 }

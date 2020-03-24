@@ -2,7 +2,6 @@
 
 namespace SamIT\Yii2\StaticAssets\controllers;
 
-
 use SamIT\Yii2\StaticAssets\helpers\AssetHelper;
 use SamIT\Yii2\StaticAssets\Module;
 use yii\console\Controller;
@@ -18,33 +17,51 @@ use yii\web\AssetManager;
  */
 class AssetController extends Controller
 {
+    /** @var string $defaultBundle */
     public $defaultBundle;
 
+    /** @var string $baseUrl */
     public $baseUrl;
 
     /** @var array List of fnmatch patterns with file names to skip. */
     public $excludedPatterns = [];
 
-
+    /**
+     * Initialize controller with module configuration by default
+     */
     public function init()
     {
         parent::init();
+
         $this->defaultBundle = $this->module->defaultBundle;
         $this->baseUrl = $this->module->baseUrl;
         $this->excludedPatterns = $this->module->excludedPatterns;
     }
 
-    public function options($actionID) {
-        return array_merge(parent::options($actionID), [
-            'defaultBundle',
-            'baseUrl',
-            'excludedPatterns'
-        ]);
+    /**
+     * @param string $actionID
+     * @return array|string[]
+     */
+    public function options($actionID)
+    {
+        return array_merge(
+            parent::options($actionID),
+            [
+                'defaultBundle',
+                'baseUrl',
+                'excludedPatterns'
+            ]
+        );
     }
 
+    /**
+     * @param $path
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionPublish($path)
     {
         $this->stdout("Publishing default bundle to webroot...\n", Console::FG_CYAN);
+
         if (isset($this->defaultBundle)) {
             $class = $this->defaultBundle;
             /** @var AssetBundle $bundle */
@@ -55,7 +72,6 @@ class AssetController extends Controller
 
             \passthru("ls -la {$bundle->basePath}");
             FileHelper::copyDirectory($bundle->basePath, "$path/default");
-
 
             $this->stdout("OK\n", Console::FG_GREEN);
         } else {
@@ -72,18 +88,27 @@ class AssetController extends Controller
         $this->stdout("OK\n", Console::FG_GREEN);
     }
 
+    /**
+     * @param $fullPath
+     * @return AssetManager
+     * @throws \yii\base\InvalidConfigException
+     */
     protected function getAssetManager($fullPath): AssetManager
     {
         $this->stdout("Creating asset path: $fullPath... ", Console::FG_CYAN);
+
         if (!\is_dir($fullPath)) {
-            \mkdir($fullPath, 0777, true);
+            @\mkdir($fullPath, 0777, true);
         }
+
         $this->stdout("OK\n", Console::FG_GREEN);
+
         // Override some configuration.
         $assetManagerConfig = $this->module->getComponents()['assetManager'];
         $assetManagerConfig['basePath'] = $fullPath;
         $assetManagerConfig['baseUrl'] = $this->baseUrl;
         $this->module->set('assetManager', $assetManagerConfig);
+
         return $this->module->get('assetManager');
     }
 }
