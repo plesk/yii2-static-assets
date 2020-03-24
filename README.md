@@ -1,6 +1,10 @@
 # yii2-static-assets
 Prevent publishing of assets at production time without changing your application.
 
+This fork removes docker-related stuff (just like the work of the ItsReddi: https://github.com/ItsReddi/yii2-static-assets, just more recent) and adds CLI command parameters. Original project of the SAM-IT's is available here: https://github.com/SAM-IT/yii2-static-assets. 
+
+Original project description below.
+
 # Motivation
 Nowadays docker is getting more and more attention and PHP applications are seeing different deployment scenarios.
 Where a few years ago if you split your nodes up at all you'd only split up the database server and the webserver that runs PHP as module or more recently via PHP-FPM, nowadays you want to split everything up.

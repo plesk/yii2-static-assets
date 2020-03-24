@@ -1,6 +1,6 @@
 {
-    "name": "sam-it/yii2-static-assets",
-    "description": "Generate static assets and build a docker nginx container",
+    "name": "ham3r/yii2-static-assets",
+    "description": "Generate static assets",
     "type": "yii2-extension",
     "require-dev": {
         "yiisoft/yii2": "^2.0",
@@ -12,12 +12,15 @@
         {
             "name": "Sam Mousa",
             "email": "sam@mousa.nl"
+        },
+        {
+            "name": "Łukasz Hamerszmidt",
+            "email": "packagist@ham3r.info"
         }
     ],
     "require": {
-        "yiisoft/yii2": "^2.0",
-        "docker-php/docker-php": "^2",
-        "docker-php/docker-php-api": "4.1.35"
+        "php": ">=7.0",
+        "yiisoft/yii2": "^2.0"
     },
     "repositories": [
         {

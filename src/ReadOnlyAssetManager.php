@@ -1,38 +1,43 @@
 <?php
-declare(strict_types=1);
 
 namespace SamIT\Yii2\StaticAssets;
 
-
 use Yii;
+use yii\web\AssetManager;
 
 /**
  * Class ReadOnlyAssetManager
- * Asset manager that does not actualy (re)publish files. Use it in production when the assets are part of the nginx
+ * Asset manager that does not actually (re)publish files. Use it in production when the assets are part of the nginx
  * container
  * @package SamIT\Yii2\StaticAssets
  */
-class ReadOnlyAssetManager extends \yii\web\AssetManager
+class ReadOnlyAssetManager extends AssetManager
 {
     /**
      * @var bool Whether to enable asset development mode.
      */
     public $assetDevelopmentMode = false;
 
-    public function init(): void
+    /**
+     * Initialize asset manager
+     */
+    public function init()
     {
-        if ($this->assetDevelopmentMode)
-        {
-            $this->baseUrl = '/dev-assets';
-            $this->basePath = '/tmp/assets';
-            $this->forceCopy = true;
-            return;
-        }
-        $this->basePath = Yii::getAlias($this->basePath);
-        $this->baseUrl = \rtrim(Yii::getAlias($this->baseUrl), '/');
+        if ($this->assetDevelopmentMode) {
+            $this->basePath = '@webroot/assets';
+            $this->baseUrl = '@web/assets';
 
+            $this->forceCopy = true;
+        } else {
+            $this->basePath = Yii::getAlias($this->basePath);
+            $this->baseUrl = \rtrim(Yii::getAlias($this->baseUrl), '/');
+        }
     }
 
+    /**
+     * @param string $src
+     * @return array|string[]
+     */
     protected function publishFile($src)
     {
         if ($this->assetDevelopmentMode) {
@@ -41,11 +46,17 @@ class ReadOnlyAssetManager extends \yii\web\AssetManager
 
         $dir = $this->hash($src);
         $fileName = \basename($src);
-        $dstDir = $this->basePath . DIRECTORY_SEPARATOR . $dir;
-        $dstFile = $dstDir . DIRECTORY_SEPARATOR . $fileName;
-        return [$dstFile, $this->baseUrl . "/$dir/$fileName"];
+        $dstDir = "{$this->basePath}/{$dir}";
+        $dstFile = "{$dstDir}/{$fileName}";
+
+        return [$dstFile, "{$this->baseUrl}/{$dir}/{$fileName}"];
     }
 
+    /**
+     * @param string $src
+     * @param array $options
+     * @return array|string[]
+     */
     protected function publishDirectory($src, $options)
     {
         if ($this->assetDevelopmentMode) {
@@ -53,14 +64,17 @@ class ReadOnlyAssetManager extends \yii\web\AssetManager
         }
 
         $dir = $this->hash($src);
-        $dstDir = $this->basePath . DIRECTORY_SEPARATOR . $dir;
-        return [$dstDir, $this->baseUrl . '/' . $dir];
+        $dstDir = "{$this->basePath}/{$dir}";
+
+        return [$dstDir, "{$this->baseUrl}/{$dir}"];
     }
 
+    /**
+     * @param string $path
+     * @return mixed|string
+     */
     protected function hash($path)
     {
         return \call_user_func(Module::hashCallback(), $path);
     }
-
-
 }
