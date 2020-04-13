@@ -1,5 +1,5 @@
 {
-    "name": "ham3r/yii2-static-assets",
+    "name": "plesk/yii2-static-assets",
     "description": "Generate static assets",
     "type": "yii2-extension",
     "require-dev": {
